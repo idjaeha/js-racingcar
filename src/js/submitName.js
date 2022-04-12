@@ -14,14 +14,16 @@ import {
 */
 const verifyName = (rawString) => {
   const values = rawString.split(",").map((value) => value.trim());
-  // 중복 검사
-  if (values.length !== new Set(values).size) {
-    window.alert("자동차 이름은 중복될 수 없습니다.");
-    return;
-  }
+
   // 글자 수 검사
   if (values.some((value) => !(0 < value.length && value.length <= 5))) {
     window.alert("자동차 이름은 1자 이상, 5자 이하여야합니다.");
+    return;
+  }
+
+  // 중복 검사
+  if (values.length !== new Set(values).size) {
+    window.alert("자동차 이름은 중복될 수 없습니다.");
     return;
   }
 

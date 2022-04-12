@@ -16,7 +16,7 @@ const verifyCount = (rawString) => {
     return;
   }
   if (isNaN(num)) {
-    window.alert("시도할 횟수만 입력할 수 있습니다.");
+    window.alert("시도할 횟수는 숫자만 입력할 수 있습니다.");
     return;
   }
   settingCountFieldset && settingCountFieldset.setAttribute("disabled", true);
