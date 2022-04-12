@@ -3,33 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <title>🏎️ 자동차 경주 게임</title>
-    <link rel="stylesheet" href="./src/css/index.css" />
   </head>
   <body>
     <div id="app">
       <section class="d-flex justify-center mt-5">
         <form>
-          <fieldset>
+          <fieldset class="__setting_name_fieldset">
             <h1 class="text-center">🏎️ 자동차 경주 게임</h1>
             <p>
               5자 이하의 자동차 이름을 콤마로 구분하여 입력해주세요. <br />
               예시) EAST, WEST, SOUTH, NORTH
             </p>
             <div class="d-flex">
-              <input type="text" class="w-100 mr-2" placeholder="자동차 이름" />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <input type="text" class="w-100 mr-2 __setting_name_input" placeholder="자동차 이름" />
+              <button type="button" class="btn btn-cyan __setting_name_button">확인</button>
             </div>
           </fieldset>
-          <fieldset>
+          <fieldset class="__setting_count_fieldset d-none">
             <p>시도할 횟수를 입력해주세요.</p>
             <div class="d-flex">
-              <input type="number" class="w-100 mr-2" placeholder="시도 횟수" />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <input type="number" class="w-100 mr-2 __setting_count_input" placeholder="시도 횟수" />
+              <button type="button" class="btn btn-cyan __setting_count_button">확인</button>
             </div>
           </fieldset>
         </form>
       </section>
-      <section class="d-flex justify-center mt-5">
+      <section class="d-flex justify-center mt-5 d-none __process_section">
         <div class="mt-4 d-flex">
           <div class="mr-2">
             <div class="car-player">EAST</div>
@@ -58,7 +57,7 @@
           </div>
         </div>
       </section>
-      <section class="d-flex justify-center mt-5">
+      <section class="d-flex justify-center mt-5 d-none">
         <div>
           <h2>🏆 최종 우승자: EAST, WEST 🏆</h2>
           <div class="d-flex justify-center">
