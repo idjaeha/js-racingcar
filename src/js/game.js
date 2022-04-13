@@ -69,6 +69,7 @@ class game {
   end() {
     resultSection.classList.remove("d-none");
     this.createResult();
+    setTimeout(() => window.alert("축하합니다."), 500);
   }
 
   clear() {
@@ -126,16 +127,18 @@ class game {
   }
 
   createResult() {
-    resultSection.insertAdjacentHTML(
-      "afterbegin",
-      STR_RESULT`${this.#cars
-        .filter((car) => car.result.length === this.#maxMove)
-        .map((car) => car.name)
-        .join(", ")}`
-    );
-    resultSection
+    const template = document.createElement("template");
+    template.innerHTML = STR_RESULT`${this.#cars
+      .filter((car) => car.result.length === this.#maxMove)
+      .map((car) => car.name)
+      .join(", ")}`;
+    const resultDOM = template.content.querySelector("div");
+
+    resultDOM
       .querySelector(".__reset_button")
       .addEventListener("click", () => this.reset());
+
+    resultSection.appendChild(resultDOM);
   }
 }
 
