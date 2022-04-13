@@ -1,3 +1,4 @@
+import { gameInstance } from "./game";
 import {
   settingCountFieldset,
   settingNameFieldset,
@@ -30,6 +31,9 @@ const verifyName = (rawString) => {
   // 다음 행동 진행
   settingNameFieldset && settingNameFieldset.setAttribute("disabled", true);
   settingCountFieldset && settingCountFieldset.classList.remove("d-none");
+
+  // 자동차 이름 정보 저장
+  gameInstance.setCars(values);
 };
 
 export const submitName = (event) => {

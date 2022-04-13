@@ -1,3 +1,4 @@
+import { gameInstance } from "./game";
 import {
   processSection,
   settingCountFieldset,
@@ -11,16 +12,26 @@ import {
 */
 const verifyCount = (rawString) => {
   const num = Number.parseInt(rawString, 10);
+
   if (num <= 0) {
     window.alert("시도할 횟수는 0이상이여야합니다.");
     return;
   }
+
   if (isNaN(num)) {
     window.alert("시도할 횟수는 숫자만 입력할 수 있습니다.");
     return;
   }
+
+  // 시도 횟수 저장
+  gameInstance.setRound(num);
+
+  // HTML 표시 변경
   settingCountFieldset && settingCountFieldset.setAttribute("disabled", true);
   processSection && processSection.classList.remove("d-none");
+
+  // 게임 시작
+  gameInstance.start();
 };
 
 export const submitCount = (event) => {
