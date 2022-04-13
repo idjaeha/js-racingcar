@@ -1,14 +1,27 @@
-import { carsNameDiv, STR_ARROW, STR_CAR_NAME, STR_SPINNER } from "./variables";
+import {
+  carsNameDiv,
+  resultSection,
+  settingCountFieldset,
+  settingCountInput,
+  settingNameFieldset,
+  settingNameInput,
+  STR_ARROW,
+  STR_CAR_NAME,
+  STR_RESULT,
+  STR_SPINNER,
+} from "./variables";
 
 class game {
   #cars = [];
   #round = 0;
   #cur = 0;
+  #maxMove = 0;
 
   constructor() {
     this.#cars = [];
     this.#round = 0;
     this.#cur = 0;
+    this.#maxMove = 0;
   }
 
   setCars(carsName) {
@@ -21,6 +34,7 @@ class game {
 
   init() {
     this.#cur = 0;
+    this.#maxMove = 0;
     // cars를 기반으로 DOM 세팅
     this.createCars();
   }
@@ -35,10 +49,11 @@ class game {
         if (isMove) {
           this.createArrow(car.name);
           car.result.push(true);
+          this.#maxMove = Math.max(this.#maxMove, car.result.length);
         }
       });
-      if (this.#cur <= this.#round) {
-        this.#cur++;
+      this.#cur++;
+      if (this.#cur < this.#round) {
         this.run();
       } else {
         this.end();
@@ -52,12 +67,30 @@ class game {
   }
 
   end() {
-    this.clear();
+    resultSection.classList.remove("d-none");
+    this.createResult();
   }
 
   clear() {
     this.#cars = [];
     this.#round = 0;
+    this.#cur = 0;
+    this.#maxMove = 0;
+  }
+
+  reset() {
+    this.clear();
+
+    carsNameDiv.querySelectorAll("div").forEach((div) => div.remove());
+    resultSection.querySelector("div").remove();
+
+    settingNameInput.value = "";
+    settingCountInput.value = "";
+
+    settingCountFieldset.removeAttribute("disabled");
+    settingCountFieldset.classList.add("d-none");
+
+    settingNameFieldset.removeAttribute("disabled");
   }
 
   createCars() {
@@ -68,22 +101,41 @@ class game {
   }
 
   createArrow(carName) {
-    const carDOM = document.querySelector(`.__car_${carName}`);
+    const carDOM = document.querySelector(
+      `.__car_${carName.replaceAll(" ", "_")}`
+    );
     carDOM.insertAdjacentHTML("beforeend", STR_ARROW);
   }
 
   createSpinners() {
     this.#cars.forEach(({ name }) => {
-      const carDOM = document.querySelector(`.__car_${name}`);
+      const carDOM = document.querySelector(
+        `.__car_${name.replaceAll(" ", "_")}`
+      );
       carDOM.insertAdjacentHTML("beforeend", STR_SPINNER);
     });
   }
 
   removeSpinners() {
     this.#cars.forEach(({ name }) => {
-      const carDOM = document.querySelector(`.__car_${name} .__spinner`);
+      const carDOM = document.querySelector(
+        `.__car_${name.replaceAll(" ", "_")} .__spinner`
+      );
       carDOM.remove();
     });
+  }
+
+  createResult() {
+    resultSection.insertAdjacentHTML(
+      "afterbegin",
+      STR_RESULT`${this.#cars
+        .filter((car) => car.result.length === this.#maxMove)
+        .map((car) => car.name)
+        .join(", ")}`
+    );
+    resultSection
+      .querySelector(".__reset_button")
+      .addEventListener("click", () => this.reset());
   }
 }
 
