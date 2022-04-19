@@ -29,8 +29,6 @@ describe("게임 실행 테스트", () => {
     });
   });
 
-  // it("생성된 스피너의 갯수와 시도 횟수가 동일해야한다.", () => {});
-
   it("가장 많은 화살표를 가진 플레이어가 우승한다.", () => {
     cy.on("window:alert", (text) => {
       expect(text).to.contains("축하");
@@ -42,7 +40,6 @@ describe("게임 실행 테스트", () => {
         const count = Number.parseInt(val, 10);
 
         // 입력받은 숫자 * 단위 시간 + t만큼 기다린다. (t는 지연으로 인해 테스트가 종료되지 않았을 경우를 대비한 상수.)
-        cy.clock();
         for (let _ = 0; _ < count; _++) cy.tick(1500);
         cy.clock().invoke("restore");
 
@@ -86,7 +83,6 @@ describe("게임 실행 테스트", () => {
         const count = Number.parseInt(val, 10);
 
         // 입력받은 숫자 * 단위 시간 + t만큼 기다린다. (t는 지연으로 인해 테스트가 종료되지 않았을 경우를 대비한 상수.)
-        cy.clock();
         for (let _ = 0; _ < count; _++) cy.tick(1500);
         cy.clock().invoke("restore");
 
