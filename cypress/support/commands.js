@@ -30,6 +30,6 @@ Cypress.Commands.add("setCorrectCarName", () => {
 });
 
 Cypress.Commands.add("setCorrectCarCount", () => {
-  cy.get(".__setting_count_input").type("5{enter}");
+  cy.get(".__setting_count_input").type("3{enter}");
   cy.get(".__process_section").should("not.have.class", "d-none");
 });
