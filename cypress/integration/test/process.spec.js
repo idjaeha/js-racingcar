@@ -7,6 +7,7 @@ const ALERT_MSG_INVALID_COUNT = "시도할 횟수는 0이상이여야합니다."
 
 describe("게임 실행 테스트", () => {
   beforeEach(() => {
+    cy.clock();
     cy.visit("/");
     cy.setCorrectCarName();
     cy.setCorrectCarCount();
@@ -16,12 +17,15 @@ describe("게임 실행 테스트", () => {
     cy.get(".__cars_name_div").as("carsNameDiv");
 
     cy.get(".__setting_name_input").then((input) => {
-      input[0].value.split(", ").forEach((name) => {
-        cy.get("@carsNameDiv")
-          .find(`.__car_${name} > .car-player`)
-          .invoke("text")
-          .should("eq", name);
-      });
+      input
+        .val()
+        .split(", ")
+        .forEach((name) => {
+          cy.get("@carsNameDiv")
+            .find(`.__car_${name} > .car-player`)
+            .invoke("text")
+            .should("eq", name);
+        });
     });
   });
 
@@ -38,7 +42,9 @@ describe("게임 실행 테스트", () => {
         const count = Number.parseInt(val, 10);
 
         // 입력받은 숫자 * 단위 시간 + t만큼 기다린다. (t는 지연으로 인해 테스트가 종료되지 않았을 경우를 대비한 상수.)
-        cy.wait(count * 1000 + 500);
+        cy.clock();
+        for (let _ = 0; _ < count; _++) cy.tick(1500);
+        cy.clock().invoke("restore");
 
         // 우승자가 누군지 알아내야함.
         // 화살표 개수를 통해 우승자의 이름을 알아낼 수 있음.
@@ -80,7 +86,9 @@ describe("게임 실행 테스트", () => {
         const count = Number.parseInt(val, 10);
 
         // 입력받은 숫자 * 단위 시간 + t만큼 기다린다. (t는 지연으로 인해 테스트가 종료되지 않았을 경우를 대비한 상수.)
-        cy.wait(count * 1000 + 500);
+        cy.clock();
+        for (let _ = 0; _ < count; _++) cy.tick(1500);
+        cy.clock().invoke("restore");
 
         // 다시 시작 버튼을 누른다.
         cy.get(".__reset_button")
